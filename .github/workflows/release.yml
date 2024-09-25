@@ -108,7 +108,7 @@ jobs:
           cd sdk
           echo "make package/luci-app-nekoclash/{clean,compile} -j$(nproc)"
           make package/luci-app-nekoclash/{clean,compile} -j$(nproc)
-          mv bin/packages/x86_64/base/ ../
+          mv bin/packages/aarch64_generic/base/ ../
           rm .config .config.old
           cd ..
           echo "status=success" >> $GITHUB_OUTPUT
