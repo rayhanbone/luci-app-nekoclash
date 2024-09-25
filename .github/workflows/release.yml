@@ -66,12 +66,12 @@ jobs:
         uses: actions/cache@v3
         with:
           path: sdk
-          key: openwrt-sdk-23.05-x86-64
+          key: openwrt-sdk-23.05.5-armsr-armv8
 
       - name: Initialization environment
         if: steps.cache-sdk.outputs.cache-hit != 'true'
         env:
-          url_sdk: https://archive.openwrt.org/releases/23.05.2/targets/x86/64/openwrt-sdk-23.05.2-x86-64_gcc-12.3.0_musl.Linux-x86_64.tar.xz
+          url_sdk: https://downloads.openwrt.org/releases/23.05.5/targets/armsr/armv8/openwrt-sdk-23.05.5-armsr-armv8_gcc-12.3.0_musl.Linux-x86_64.tar.xz
         run: |
           wget ${{ env.url_sdk }}
           file_name=$(echo ${{env.url_sdk}} | awk -F/ '{print $NF}')
