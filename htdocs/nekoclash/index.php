@@ -29,18 +29,14 @@ $neko_status=exec("uci -q get neko.cfg.enabled");
     <script type="text/javascript" src="./assets/js/neko.js"></script>
   </head>
   <body>
- 
-    <div class="container-sm container-bg text-center callout border border-3 rounded-4 col-11">
+        <div class="container-sm container-bg  callout border border-3 rounded-4 col-11">
         <div class="row">
-            <a href="#" class="col btn btn-lg">Home</a>
-            <a href="./dashboard.php" class="col btn btn-lg">Dashboard</a>
-            <a href="./configs.php" class="col btn btn-lg">Configs</a>
-            <a href="./settings.php" class="col btn btn-lg">Settings</a>
-        </div>
-    </div>
-    <div class="container text-left p-3">
-    <div class="container container-bg border border-3 rounded-4 col-12 mb-4">
-    <h2 class="text-center p-2" style="margin-top: -15px; margin-bottom: 5px;">NekoClash</h2>
+            <a href="#" class="col btn btn-lg">🏠 Home</a>
+            <a href="./dashboard.php" class="col btn btn-lg">📊 Panel</a>
+            <a href="./configs.php" class="col btn btn-lg">⚙️ Configs</a>
+            <a href="./settings.php" class="col btn btn-lg">🛠️ Settings</a>
+<h2 class="text-center p-2">NekoClash</h2>
+ <div style="border: 1px solid black; padding: 10px; ">
    <br>
 <?php
 $translate = [
@@ -591,82 +587,70 @@ $singboxStartLogContent = readLogFile($singboxStartLogFile);
             width: 100%; 
         }
     </style>
-<table class="table">
-    <tbody>
-        <tr>
-<td class="align-middle">Status</td>
-<td>
-    <div class="d-flex flex-wrap gap-2">
-        <?php if($neko_status==1): ?>
-            <span class="badge bg-success" style="font-size: 16px; padding: 8px 12px;">Mihomo Running</span>
-        <?php else: ?>
-            <span class="badge bg-danger" style="font-size: 16px; padding: 8px 12px;">Mihomo Not Running</span>
-        <?php endif; ?>
-        <span class="badge bg-info " style="font-size: 16px; padding: 8px 12px;"><?php echo $str_cfg; ?></span>
-        <?php if ($singbox_status == 1): ?>
-            <span class="badge bg-success" style="font-size: 16px; padding: 8px 12px;">Sing-box Running</span>
-        <?php else: ?>
-            <span class="badge bg-danger" style="font-size: 16px; padding: 8px 12px;">Sing-box Not Running</span>
-        <?php endif; ?>
-                </div>
-            </td>
-        </tr>
-        <tr>
-       <tr>
-            <td class="align-middle">Control</td>
-            <td>
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <form action="index.php" method="post">
-                            <div class="mb-2">
-                                <div style="height: 31px;">       <h5 class="text-center p-2">Change Configs</h5></div>
-                            </div>
-                            <div class="d-grid gap-2">
-                    <button type="submit" name="neko" value="start" class="btn <?php echo $neko_status == 1 ? 'btn-outline-success' : 'btn-success'; ?>" style="font-size: 16px; <?php echo $neko_status == 1 ? 'opacity: 0.6;' : ''; ?>">Enable Mihomo</button>
-                    <button type="submit" name="neko" value="disable" class="btn <?php echo $neko_status == 0 ? 'btn-outline-danger' : 'btn-danger'; ?>" style="font-size: 16px; <?php echo $neko_status == 0 ? 'opacity: 0.6;' : ''; ?>">Disable Mihomo</button>
-                    <button type="submit" name="neko" value="restart" class="btn <?php echo $neko_status == 0 ? 'btn-outline-warning' : 'btn-warning'; ?>" style="font-size: 16px; <?php echo $neko_status == 0 ? 'opacity: 0.6;' : ''; ?>">Restart Mihomo</button>
-                            </div>
-                        </form>
+            <td>Status</td>
+                <td class="d-grid">
+                    <div class="btn-group" role="group" aria-label="ctrl">
+                        <?php
+                            if($neko_status==1) echo "<button type=\"button\" class=\"btn btn-success\">Mihomo Running</button>\n";
+
+                            else echo "<button type=\"button\" class=\"btn btn-outline-danger\">Mihomo Not Running</button>\n";
+
+                            echo "<button type=\"button\" class=\"btn btn-deepskyblue\">$str_cfg</button>\n";
+
+                            if ($singbox_status == 1) echo "<button type=\"button\" class=\"btn btn-success\">Sing-box Running</button>\n";
+
+                            else  echo "<button type=\"button\" class=\"btn btn-outline-danger\">Sing-box Not Running</button>\n";
+                        ?>
                     </div>
-                    <div class="col-md-6">
-                        <form action="index.php" method="post">
-                            <div class="mb-2">
-                                <select name="config_file" id="config_file" class="form-select form-select-sm">
-                                    <?php foreach ($availableConfigs as $config): ?>
-                                        <option value="<?= htmlspecialchars($config) ?>" <?= isset($_POST['config_file']) && $_POST['config_file'] === $config ? 'selected' : '' ?>>
-                                            <?= htmlspecialchars(basename($config)) ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="d-grid gap-2">
-                    <button type="submit" name="singbox" value="start" class="btn <?php echo $singbox_status == 1 ? 'btn-outline-info' : 'btn-success'; ?>" style="font-size: 16px; <?php echo $singbox_status == 1 ? 'opacity: 0.6;' : ''; ?>">Enable Sing-box</button>
-                    <button type="submit" name="singbox" value="disable" class="btn <?php echo $singbox_status == 0 ? 'btn-outline-danger' : 'btn-danger'; ?>" style="font-size: 16px; <?php echo $singbox_status == 0 ? 'opacity: 0.6;' : ''; ?>">Disable Sing-box</button>
-                    <button type="submit" name="singbox" value="restart" class="btn <?php echo $singbox_status == 0 ? 'btn-outline-warning' : 'btn-warning'; ?>" style="font-size: 16px; <?php echo $singbox_status == 0 ? 'opacity: 0.6;' : ''; ?>">Restart Sing-box</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="align-middle">Running Mode</td>
-            <td>
-                <?php
-                $mode_placeholder = '';
-                if ($neko_status == 1) {
-                    $mode_placeholder = $neko_cfg['echanced'] . " | " . $neko_cfg['mode'];
-                } elseif ($singbox_status == 1) {
-                    $mode_placeholder = "Rule Mode";
-                } else {
-                    $mode_placeholder = "Not Running";
-                }
-                ?>
-                <input class="form-control form-control-sm text-center" name="mode" type="text" value="<?php echo $mode_placeholder; ?>" readonly>
-            </td>
-        </tr>
-    </tbody>
-</table>
+                </td>
+            </tr>
+            <tr>
+            <td>Control</td>
+                <form action="index.php" method="post">
+                    <td class="d-grid">
+                        <div class="btn-group col" role="group" aria-label="ctrl">
+                            <button type="submit" name="neko" value="start" class="btn btn<?php if ($neko_status == 1) echo "-outline" ?>-success <?php if ($neko_status == 1) echo "disabled" ?> d-grid">Enable Mihomo</button>
+                            <button type="submit" name="neko" value="disable" class="btn btn<?php if ($neko_status == 0) echo "-outline" ?>-danger <?php if ($neko_status == 0) echo "disabled" ?> d-grid">Disable Mihomo</button>
+                            <button type="submit" name="neko" value="restart" class="btn btn<?php if ($neko_status == 0) echo "-outline" ?>-warning <?php if ($neko_status == 0) echo "disabled" ?> d-grid">Restart Mihomo</button>
+                        </div>
+                    </td>
+                </form>
+
+                <form action="index.php" method="post">
+                    <td class="d-grid">   
+                        <select name="config_file" id="config_file" class="form-select">
+                            <?php foreach ($availableConfigs as $config): ?>
+                                <option value="<?= htmlspecialchars($config) ?>" <?= isset($_POST['config_file']) && $_POST['config_file'] === $config ? 'selected' : '' ?>>
+                                    <?= htmlspecialchars(basename($config)) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="btn-group col" role="group" aria-label="ctrl">
+                            <button type="submit" name="singbox" value="start" class="btn btn<?php echo ($singbox_status == 1) ? "-outline" : "" ?>-info <?php echo ($singbox_status == 1) ? "disabled" : "" ?> d-grid">Enable Sing-box</button>
+                            <button type="submit" name="singbox" value="disable" class="btn btn<?php echo ($singbox_status == 0) ? "-outline" : "" ?>-danger <?php echo ($singbox_status == 0) ? "disabled" : "" ?> d-grid">Disable Sing-box</button>
+                            <button type="submit" name="singbox" value="restart" class="btn btn<?php echo ($singbox_status == 0) ? "-outline" : "" ?>-warning <?php echo ($singbox_status == 0) ? "disabled" : "" ?> d-grid">Restart Sing-box</button>
+                        </div>
+                    </td>
+                </form>
+            </tr>
+            <tr>
+                <td>Running Mode</td>
+                <td class="d-grid">
+                    <?php
+                    $mode_placeholder = '';
+                    if ($neko_status == 1) {
+                        $mode_placeholder = $neko_cfg['echanced'] . " | " . $neko_cfg['mode'];
+                    } elseif ($singbox_status == 1) {
+                        $mode_placeholder = "Rule Mode";
+                    } else {
+                        $mode_placeholder = "Not Running";
+                    }
+                    ?>
+                    <input class="form-control text-center" name="mode" type="text" placeholder="<?php echo $mode_placeholder; ?>" disabled>
+                </td>
+            </tr>
+       </tbody>
+    </table>
    <h2 class="text-center p-2" >System Information</h2>
     <table class="table table-borderless mb-2">
         <tbody>
@@ -714,201 +698,105 @@ $singboxStartLogContent = readLogFile($singboxStartLogFile);
 </div>
 
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            padding: 20px;
-        }
-        .log-section {
-            border: 2px solid #c0c0c0; 
-            padding: 10px; 
-            border-radius: 8px;
-            flex: 1;
-            min-width: 0; 
-            margin-bottom: 20px; 
-        }
         .log-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+            height: 300px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
-        .log-header {
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 1.1rem; 
-        }
-        pre.form-control {
-            height: 300px; 
-            width: 100%; 
-            padding: 10px;
-            box-sizing: border-box;
-            white-space: pre-wrap; 
-            overflow-x: hidden; 
-            overflow-y: auto; 
-            border: 1px solid #ccc; 
-            border-radius: 4px; 
-        }
-        .log-footer {
-            display: flex;
-            justify-content: center; 
-            margin-top: auto;
-        }
-        .nav-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 10px; 
-            margin-top: 20px;
-        }
-        .nav-buttons a {
-            display: inline-block;
-            text-decoration: none;
-            color: #ffffff;
-            border: 1px solid;
-            border-radius: 4px;
-            padding: 10px 20px;
-            text-align: center;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        .nav-buttons a:hover {
-            opacity: 0.9;
-        }
-        .current-menu-button {
-            background-color: #007bff; 
-            border-color: #007bff;
-        }
-        .current-menu-button:hover {
-            background-color: #0056b3; 
-            border-color: #004085;
-        }
-        .config-menu-button {
-            background-color: #28a745; 
-            border-color: #28a745;
-        }
-        .config-menu-button:hover {
-            background-color: #218838; 
-            border-color: #1e7e34;
-        }
-        .monitoring-button {
-            background-color: #ffc107; 
-            border-color: #ffc107;
-        }
-        .monitoring-button:hover {
-            background-color: #e0a800; 
-            border-color: #d39e00;
-        }
-        .box-menu-button {
-            background-color: #ff69b4; 
-            border-color: #ff1493;     
-            color: white;              
-        }
-        .box-menu-button:hover {
-            background-color: #ff69b4; 
-            border-color: #ff1493;    
-        }
-        .main-menu-button {
-            background-color: #dc3545; 
-            border-color: #dc3545;
-        }
-        .main-menu-button:hover {
-            background-color: #c82333; 
-            border-color: #bd2130;
-        }
-        footer {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .log-section {
-                margin-bottom: 20px; 
-                margin-right: 0; 
-                flex: 1 0 100%; 
-            }
-            .d-flex {
-                flex-direction: column; 
-            }
+        .log-card {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-   <div class="container rounded-4 col-12 mb-4">
-        <h2 class="text-center p-2">Logs</h2>
-        <div class="d-flex flex-wrap">
-            <div class="log-section">
-                <div class="log-container">
-                    <h4 class="log-header">Plugin Logs</h4>
-                    <pre id="plugin_log" class="form-control" style="overflow-y: scroll;"></pre>
-                    <form action="index.php" method="post" class="mt-3 log-footer">
-                        <button type="submit" name="clear_plugin_log" class="btn btn-danger btn-clear-log">Clear Log</button>
+    <h2 class="text-center my-4">Logs</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card log-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center mb-0">NeKo Logs</h4>
+                </div>
+                <div class="card-body">
+                    <pre id="plugin_log" class="log-container form-control"></pre>
+                </div>
+                <div class="card-footer text-center">
+                    <form action="index.php" method="post">
+                        <button type="submit" name="clear_plugin_log" class="btn btn-danger">🗑️ Clear Log</button>
                     </form>
                 </div>
             </div>
-
-            <div class="log-section">
-                <div class="log-container">
-                    <h4 class="log-header">Mihomo Logs</h4>
-                    <pre id="bin_logs" class="form-control" style="overflow-y: scroll;"></pre> 
-                    <form action="index.php" method="post" class="mt-3 log-footer">
-                        <button type="submit" name="neko" value="clear" class="btn btn-danger btn-clear-log">Clear Log</button>
+        </div>
+        <div class="col-md-4">
+            <div class="card log-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center mb-0">Mihomo Logs</h4>
+                </div>
+                <div class="card-body">
+                    <pre id="bin_logs" class="log-container form-control"></pre>
+                </div>
+                <div class="card-footer text-center">
+                    <form action="index.php" method="post">
+                        <button type="submit" name="neko" value="clear" class="btn btn-danger">🗑️ Clear Log</button>
                     </form>
                 </div>
             </div>
-
-            <div class="log-section">
-                <div class="log-container">
-                    <h4 class="log-header">Sing-box Logs</h4>
-                    <pre id="singbox_log" class="form-control" style="overflow-y: scroll;"></pre>
-                    <form action="index.php" method="post" class="mt-3 log-footer">
-                        <button type="submit" name="clear_singbox_log" class="btn btn-danger btn-clear-log">Clear Log</button>
+        </div>
+        <div class="col-md-4">
+            <div class="card log-card">
+                <div class="card-header">
+                    <h4 class="card-title text-center mb-0">Sing-box Logs</h4>
+                </div>
+                <div class="card-body">
+                    <pre id="singbox_log" class="log-container form-control"></pre>
+                </div>
+                <div class="card-footer text-center">
+                    <form action="index.php" method="post">
+                        <button type="submit" name="clear_singbox_log" class="btn btn-danger">🗑️ Clear Log</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+    <script src="./assets/js/bootstrap.bundle.min.js"></script>
     <script>
         function scrollToBottom(elementId) {
             var logElement = document.getElementById(elementId);
-            logElement.scrollTop = logElement.scrollHeight; 
+            logElement.scrollTop = logElement.scrollHeight;
         }
-
         function fetchLogs() {
             Promise.all([
-                fetch('fetch_logs.php?file=plugin_log'),  
-                fetch('fetch_logs.php?file=mihomo_log'),  
-                fetch('fetch_logs.php?file=singbox_log')  
+                fetch('fetch_logs.php?file=plugin_log'),
+                fetch('fetch_logs.php?file=mihomo_log'),
+                fetch('fetch_logs.php?file=singbox_log')
             ])
-            .then(responses => Promise.all(responses.map(res => res.text()))) 
+            .then(responses => Promise.all(responses.map(res => res.text())))
             .then(data => {
-                document.getElementById('plugin_log').textContent = data[0]; 
-                document.getElementById('bin_logs').textContent = data[1];   
-                document.getElementById('singbox_log').textContent = data[2]; 
-
+                document.getElementById('plugin_log').textContent = data[0];
+                document.getElementById('bin_logs').textContent = data[1];
+                document.getElementById('singbox_log').textContent = data[2];
                 scrollToBottom('plugin_log');
-                scrollToBottom('bin_logs');   
+                scrollToBottom('bin_logs');
                 scrollToBottom('singbox_log');
             })
             .catch(err => console.error('Error fetching logs:', err));
         }
-
         fetchLogs();
         setInterval(fetchLogs, 5000);
     </script>
+</body>
+</html>
 <a href="/nekoclash/mon.php" class="config-menu-button d-flex justify-content-center align-items-center" 
-   style="height: 40px; width: 40px; line-height: 40px; border-radius: 50%; background-color: transparent; border: 5px solid; color: #ffcc00; position: absolute; top: 10px; left: 20px; text-align: center; text-decoration: none; transition: opacity 0.3s; animation: borderAnimation 3s linear infinite;" 
+   style="height: 40px; width: 40px; line-height: 40px; border-radius: 50%; background-color: transparent; border: 5px solid; color: #ffcc00; position: absolute; top: 57px; left: 5px; text-align: center; text-decoration: none; transition: opacity 0.3s; animation: borderAnimation 3s linear infinite;" 
    onclick="speakAndNavigate('Open Mihomo Management Panel', '/nekoclash/mon.php'); return false;"
    onmouseover="this.style.opacity='0.8';" onmouseout="this.style.opacity='1';">
-    <i>⚙️</i>
+    <i>🖥️</i>
 </a>
     <script>
         function speakAndNavigate(message, url) {
